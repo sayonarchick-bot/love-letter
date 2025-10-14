@@ -5,16 +5,129 @@
   <title>Письмо для Айлины ❤️</title>
   <style>
     body {
-      background-color: pink;
-      color: #222;
-      font-family: sans-serif;
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ffb6c1, #ff69b4, #ffc0cb);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
-      padding: 50px;
+      font-family: "Segoe UI", sans-serif;
+      color: white;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    p {
+      max-width: 600px;
+      font-size: 1.2em;
+      line-height: 1.6em;
+      opacity: 0;
+      animation: fadeIn 3s ease 2s forwards;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      animation: float 6s infinite ease-in;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 10px;
+      top: 0;
+    }
+
+    @keyframes float {
+      0% {transform: rotate(45deg) translateY(0); opacity: 1;}
+      100% {transform: rotate(45deg) translateY(-100vh); opacity: 0;}
+    }
+
+    @keyframes fadeIn {
+      to {opacity: 1;}
+    }
+
+    button {
+      margin-top: 30px;
+      background: white;
+      color: #ff69b4;
+      border: none;
+      border-radius: 25px;
+      padding: 12px 24px;
+      font-size: 1em;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      opacity: 0;
+      animation: fadeIn 2s ease 4s forwards;
+    }
+
+    button:hover {
+      background: #ffe4e1;
     }
   </style>
 </head>
 <body>
-  <h1>Айлина ❤️</h1>
-  <p>Знаешь, мы встречаемся уже немного больше 1,5 месяца...</p>
+  <h1>Для тебя, Айлина 💌</h1>
+  <p id="message">
+    Айлина, знаешь, мы встречаемся уже немного больше 1,5 месяца,  
+    и за это время мне было невероятно приятно быть с тобой.  
+    Каждый мой день начинался с твоего «доброе утро»  
+    и заканчивался твоими «сладких снов».  
+    Каждое твоё сообщение всегда радовало меня,  
+    и я до сих пор помню тот день, когда мы начали встречаться.  
+    Мы сидели вдвоём, только ты и я,  
+    просто проводили время и смеялись.  
+    И с тех пор ты — мой самый дорогой человек ❤️
+  </p>
+
+  <button onclick="showMore()">Нажми сюда 💖</button>
+
+  <script>
+    // появление плавающих сердечек
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 3 + Math.random() * 3 + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(createHeart, 400);
+
+    // второй текст при нажатии
+    function showMore() {
+      document.getElementById("message").innerHTML = 
+        Айлина, я просто хочу, чтобы ты знала —  
+        ты делаешь мою жизнь лучше каждый день.  
+        Ты — причина моей улыбки,  
+        и я благодарен судьбе, что ты рядом ❤️  
+        <br><br>С любовью,<br>Тот самый человек, кто всегда рядом 💞
+      ;
+    }
+  </script>
 </body>
 </html>
