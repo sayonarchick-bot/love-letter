@@ -7,39 +7,40 @@
     body {
       margin: 0;
       height: 100vh;
-      background: linear-gradient(135deg, #ffb6c1, #ff69b4, #ffc0cb);
+      background: linear-gradient(180deg, #ffb6c1, #ff69b4, #ffc0cb);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      font-family: "Segoe UI", sans-serif;
+      font-family: "Dancing Script", cursive;
       color: white;
       overflow: hidden;
     }
 
     h1 {
-      font-size: 2.7em;
+      font-size: 3em;
       margin-bottom: 20px;
-      opacity: 0;
       animation: fadeIn 2s ease forwards;
     }
 
     p {
-      max-width: 90%;
-      font-size: 1.3em;
+      max-width: 700px;
+      font-size: 1.5em;
       line-height: 1.6em;
       opacity: 0;
       animation: fadeIn 3s ease 2s forwards;
     }
 
     .heart {
-      position: absolute;
+      position: fixed;
       width: 30px;
       height: 30px;
       background: red;
       transform: rotate(45deg);
-      animation: float 6s infinite ease-in;
+      top: -10px;
+      animation: fall linear forwards;
+      opacity: 0.8;
     }
 
     .heart::before,
@@ -62,14 +63,13 @@
       top: 0;
     }
 
-    @keyframes float {
-      0% { transform: rotate(45deg) translateY(-10vh); opacity: 0; }
-      20% { opacity: 1; }
+    @keyframes fall {
+      0% { transform: rotate(45deg) translateY(0); opacity: 1; }
       100% { transform: rotate(45deg) translateY(100vh); opacity: 0; }
     }
 
     @keyframes fadeIn {
-      to { opacity: 1; }
+      to {opacity: 1;}
     }
 
     button {
@@ -78,8 +78,8 @@
       color: #ff69b4;
       border: none;
       border-radius: 25px;
-      padding: 14px 28px;
-      font-size: 1.1em;
+      padding: 12px 24px;
+      font-size: 1em;
       cursor: pointer;
       font-weight: bold;
       transition: all 0.3s ease;
@@ -91,8 +91,13 @@
       background: #ffe4e1;
     }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
 </head>
 <body>
+  <audio autoplay loop>
+    <source src="https://docs.google.com/uc?export=download&id=1eqazTuS0VW4d5n-7YXXP-0lYZj-sB0HE" type="audio/mp3">
+  </audio>
+
   <h1>Для тебя, Айлина 💌</h1>
   <p id="message">
     Айлина, знаешь, мы встречаемся уже немного больше 1,5 месяца,  
@@ -106,37 +111,29 @@
     И с тех пор ты — мой самый дорогой человек ❤️
   </p>
 
-  <button onclick="playMusicAndShowMore()">Нажми сюда 💖</button>
-
-  <!-- Вставка YouTube в скрытом режиме -->
-  <iframe id="ytplayer" width="0" height="0"
-    src="https://www.youtube.com/embed/sZrHNW5qc9w?enablejsapi=1&autoplay=0&mute=0"
-    frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="display:none;">
-  </iframe>
+  <button onclick="showMore()">Нажми сюда 💖</button>
 
   <script>
-    // Сердечки
+    // падение сердец
     function createHeart() {
       const heart = document.createElement("div");
       heart.className = "heart";
-      heart.style.left = (Math.random() * 100) + "vw";
-      heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 3 + Math.random() * 3 + "s";
       document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 7000);
+      setTimeout(() => heart.remove(), 6000);
     }
-    setInterval(createHeart, 600);
+    setInterval(createHeart, 300);
 
-    // Показывает второй текст + запускает музыку
-    function playMusicAndShowMore() {
-      // показываем текст
-      document.getElementById("message").innerHTML = 
-        "Айлина, я просто хочу, чтобы ты знала — ты делаешь мою жизнь лучше каждый день. ❤️<br><br>" +
-        "Ты — причина моей улыбки, и я благодарен судьбе, что ты рядом.<br>" +
-        "С любовью,<br>Тот самый человек, кто всегда рядом 💞";
-
-     
+    // кнопка с продолжением текста
+    function showMore() {
+      document.getElementById("message").innerHTML =
+        Айлина, я просто хочу, чтобы ты знала —  
+        ты делаешь мою жизнь лучше каждый день.  
+        Ты — причина моей улыбки,  
+        и я благодарен судьбе, что ты рядом ❤️  
+        <br><br>С любовью,<br>Тот самый человек, кто всегда рядом 💞;
     }
   </script>
 </body>
 </html>
-
