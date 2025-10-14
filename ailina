@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Письмо для Айлины ❤️</title>
+  <style>
+    body {
+      background-color: pink;
+      color: #222;
+      font-family: sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Айлина ❤️</h1>
+  <p>Знаешь, мы встречаемся уже немного больше 1,5 месяца...</p>
+</body>
+</html>
