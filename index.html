@@ -19,14 +19,15 @@
     }
 
     h1 {
-      font-size: 2.5em;
+      font-size: 2.7em;
       margin-bottom: 20px;
+      opacity: 0;
       animation: fadeIn 2s ease forwards;
     }
 
     p {
-      max-width: 600px;
-      font-size: 1.2em;
+      max-width: 90%;
+      font-size: 1.3em;
       line-height: 1.6em;
       opacity: 0;
       animation: fadeIn 3s ease 2s forwards;
@@ -34,8 +35,8 @@
 
     .heart {
       position: absolute;
-      width: 20px;
-      height: 20px;
+      width: 30px;
+      height: 30px;
       background: red;
       transform: rotate(45deg);
       animation: float 6s infinite ease-in;
@@ -45,29 +46,30 @@
     .heart::after {
       content: '';
       position: absolute;
-      width: 20px;
-      height: 20px;
+      width: 30px;
+      height: 30px;
       background: red;
       border-radius: 50%;
     }
 
     .heart::before {
-      top: -10px;
+      top: -15px;
       left: 0;
     }
 
     .heart::after {
-      left: 10px;
+      left: 15px;
       top: 0;
     }
 
     @keyframes float {
-      0% {transform: rotate(45deg) translateY(0); opacity: 1;}
-      100% {transform: rotate(45deg) translateY(-100vh); opacity: 0;}
+      0% { transform: rotate(45deg) translateY(-10vh); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: rotate(45deg) translateY(100vh); opacity: 0; }
     }
 
     @keyframes fadeIn {
-      to {opacity: 1;}
+      to { opacity: 1; }
     }
 
     button {
@@ -76,8 +78,8 @@
       color: #ff69b4;
       border: none;
       border-radius: 25px;
-      padding: 12px 24px;
-      font-size: 1em;
+      padding: 14px 28px;
+      font-size: 1.1em;
       cursor: pointer;
       font-weight: bold;
       transition: all 0.3s ease;
@@ -104,26 +106,38 @@
     И с тех пор ты — мой самый дорогой человек ❤️
   </p>
 
-  <button onclick="showMore()">Нажми сюда 💖</button>
+  <button onclick="playMusicAndShowMore()">Нажми сюда 💖</button>
+
+  <!-- Вставка YouTube в скрытом режиме -->
+  <iframe id="ytplayer" width="0" height="0"
+    src="https://www.youtube.com/embed/sZrHNW5qc9w?enablejsapi=1&autoplay=0&mute=0"
+    frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="display:none;">
+  </iframe>
 
   <script>
-    // появление плавающих сердечек
+    // Сердечки
     function createHeart() {
       const heart = document.createElement("div");
       heart.className = "heart";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = 3 + Math.random() * 3 + "s";
+      heart.style.left = (Math.random() * 100) + "vw";
+      heart.style.animationDuration = (4 + Math.random() * 4) + "s";
       document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 6000);
+      setTimeout(() => heart.remove(), 7000);
     }
-    setInterval(createHeart, 400);
+    setInterval(createHeart, 600);
 
-    // 💖 Эта часть управляет кнопкой
-    function showMore() {
+    // Показывает второй текст + запускает музыку
+    function playMusicAndShowMore() {
+      // показываем текст
       document.getElementById("message").innerHTML = 
         "Айлина, я просто хочу, чтобы ты знала — ты делаешь мою жизнь лучше каждый день. ❤️<br><br>" +
         "Ты — причина моей улыбки, и я благодарен судьбе, что ты рядом.<br>" +
         "С любовью,<br>Тот самый человек, кто всегда рядом 💞";
+
+      // запускаем музыку через YouTube API
+      const iframe = document.getElementById("ytplayer");
+      iframe.style.display = "block";
+      iframe.src += "&autoplay=1";  // добавляем autoplay
     }
   </script>
 </body>
