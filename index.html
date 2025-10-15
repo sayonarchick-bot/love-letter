@@ -3,10 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <title>Письмо для Айлины ❤️</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <!-- Красивый рукописный шрифт -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
-
   <style>
     html, body {
       margin: 0;
@@ -26,18 +24,18 @@
     h1 {
       font-size: calc(28px + 5vw);
       margin-bottom: 20px;
-      text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
       opacity: 0;
       animation: fadeIn 2s ease forwards;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.2);
     }
 
     #message {
       max-width: 90%;
-      font-size: calc(20px + 1.5vw);
-      line-height: 1.6em;
+      font-size: calc(18px + 1.2vw);
+      line-height: 1.5em;
       opacity: 0;
       transition: opacity 1s ease;
-      text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
     }
 
     #loveBtn {
@@ -50,10 +48,9 @@
       cursor: pointer;
       font-weight: bold;
       box-shadow: 0 6px 14px rgba(0,0,0,0.15);
-      transition: all 0.2s ease;
+      transition: transform 0.2s ease;
       z-index: 1000;
     }
-
     #loveBtn:hover {
       background: #ffe4e1;
       transform: scale(1.05);
@@ -70,9 +67,7 @@
       pointer-events: none;
       animation: fall linear forwards;
     }
-
-    .heart::before,
-    .heart::after {
+    .heart::before, .heart::after {
       content: '';
       position: absolute;
       width: 60px;
@@ -80,12 +75,10 @@
       background-color: #ff3b82;
       border-radius: 50%;
     }
-
     .heart::before {
       top: -30px;
       left: 0;
     }
-
     .heart::after {
       left: 30px;
       top: 0;
@@ -101,17 +94,14 @@
         opacity: 0;
       }
     }
-
     @keyframes fadeIn {
-      100% { opacity: 1; }
+      to { opacity: 1; }
     }
   </style>
 </head>
-
 <body>
   <audio id="bgAudio" loop preload="auto">
-    <!-- Музыка: Kaspiyskiy Gruz — Любовь -->
-    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_7cf2e9f6e5.mp3" type="audio/mp3">
+    <source src="https://github.com/sayonarchick-bot/love-letter/raw/refs/heads/main/music.mp3" type="audio/mp3">
   </audio>
 
   <h1 id="title">Это письмо для тебя, Айлина 💌</h1>
@@ -125,18 +115,16 @@
       const title = document.getElementById('title');
       const audio = document.getElementById('bgAudio');
 
-      // 💗 Падение сердец ровно сверху вниз
-      function createHeart() {
+      function createHeart(){
         const heart = document.createElement('div');
         heart.className = 'heart';
         heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.animationDuration = (3 + Math.random() * 2) + 's'; // немного быстрее
+        heart.style.animationDuration = (3 + Math.random()*2) + 's';
         document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 5000);
+        setTimeout(() => heart.remove(), 6000);
       }
       setInterval(createHeart, 300);
 
-      // 💬 Кнопка
       btn.addEventListener('click', () => {
         title.style.opacity = 0;
         btn.style.display = 'none';
@@ -152,9 +140,14 @@
         `;
         msg.style.opacity = 1;
 
-        // 🎵 Музыка включается
         audio.volume = 0.8;
-        audio.play().catch(() => console.log('Автозапуск музыки заблокирован.'));
+        audio.play().catch((e) => {
+          console.warn('Автозапуск музыки заблокирован', e);
+          // пробуем запустить при следующем касании
+          document.body.addEventListener('click', () => {
+            audio.play();
+          }, { once: true });
+        });
       });
     });
   </script>
