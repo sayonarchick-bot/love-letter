@@ -26,16 +26,17 @@
 
     p {
       max-width: 700px;
-      font-size: 1.5em;
+      font-size: 1.6em;
       line-height: 1.6em;
       opacity: 0;
       animation: fadeIn 3s ease 2s forwards;
+      transition: opacity 1s ease;
     }
 
     .heart {
       position: fixed;
-      width: 30px;
-      height: 30px;
+      width: 35px;
+      height: 35px;
       background: red;
       transform: rotate(45deg);
       top: -10px;
@@ -47,19 +48,19 @@
     .heart::after {
       content: '';
       position: absolute;
-      width: 30px;
-      height: 30px;
+      width: 35px;
+      height: 35px;
       background: red;
       border-radius: 50%;
     }
 
     .heart::before {
-      top: -15px;
+      top: -17px;
       left: 0;
     }
 
     .heart::after {
-      left: 15px;
+      left: 17px;
       top: 0;
     }
 
@@ -78,8 +79,8 @@
       color: #ff69b4;
       border: none;
       border-radius: 25px;
-      padding: 12px 24px;
-      font-size: 1.2em;
+      padding: 12px 28px;
+      font-size: 1.3em;
       cursor: pointer;
       font-weight: bold;
       transition: all 0.3s ease;
@@ -89,6 +90,7 @@
 
     button:hover {
       background: #ffe4e1;
+      transform: scale(1.05);
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
@@ -114,7 +116,7 @@
   <button id="loveBtn">Нажми сюда 💖</button>
 
   <script>
-    // падение сердец
+    // Падающие сердца
     function createHeart() {
       const heart = document.createElement("div");
       heart.className = "heart";
@@ -125,15 +127,20 @@
     }
     setInterval(createHeart, 300);
 
-    // кнопка — работает через addEventListener
+    // Кнопка - показывает второе сообщение
     document.getElementById("loveBtn").addEventListener("click", function() {
-      document.getElementById("message").innerHTML = 
-        Айлина, я просто хочу, чтобы ты знала —  
-        ты делаешь мою жизнь лучше каждый день.  
-        Ты — причина моей улыбки,  
-        и я благодарен судьбе, что ты рядом ❤️  
-        <br><br>С любовью,<br>Тот самый человек, кто всегда рядом 💞
-      ;
+      const message = document.getElementById("message");
+      message.style.opacity = 0;
+      setTimeout(() => {
+        message.innerHTML = 
+          Айлина, я просто хочу, чтобы ты знала —  
+          ты делаешь мою жизнь лучше каждый день.  
+          Ты — причина моей улыбки,  
+          и я благодарен судьбе, что ты рядом ❤️  
+          <br><br>С любовью,<br>Тот самый человек, кто всегда рядом 💞
+        ;
+        message.style.opacity = 1;
+      }, 500);
     });
   </script>
 </body>
