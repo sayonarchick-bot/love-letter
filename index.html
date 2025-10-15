@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <title>Письмо для Айлины ❤️</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
   <style>
     html, body {
@@ -25,7 +25,7 @@
     }
 
     h1 {
-      font-size: calc(22px + 5vw);
+      font-size: calc(26px + 5vw);
       margin-bottom: 10px;
       text-shadow: 2px 2px 6px rgba(0,0,0,0.2);
       animation: fadeIn 2s ease forwards;
@@ -33,7 +33,7 @@
 
     #message {
       max-width: 90%;
-      font-size: calc(18px + 1.2vw);
+      font-size: calc(20px + 1.5vw);
       line-height: 1.5em;
       text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
       transition: opacity 0.5s ease;
@@ -66,11 +66,10 @@
       height: 60px;
       background-color: #ff3b82;
       top: -70px;
-      left: 50%;
-      transform: translateX(-50%) scale(1) rotate(0deg);
-      opacity: 0.9;
-      pointer-events: none;
+      transform: rotate(45deg);
+      opacity: 0.8;
       animation: fall linear forwards;
+      pointer-events: none;
     }
 
     .heart::before,
@@ -95,11 +94,11 @@
 
     @keyframes fall {
       0% {
-        transform: translateY(-10vh) scale(1);
+        transform: translateY(-10vh) rotate(45deg);
         opacity: 1;
       }
       100% {
-        transform: translateY(110vh) scale(1.2);
+        transform: translateY(110vh) rotate(45deg);
         opacity: 0;
       }
     }
@@ -109,7 +108,6 @@
         opacity: 1;
       }
     }
-
   </style>
 </head>
 <body>
@@ -139,38 +137,43 @@
       const msg = document.getElementById('message');
       const audio = document.getElementById('bgAudio');
 
-      // Сердечки падают сверху вниз
+      // Падающие сердца
       function createHeart() {
         const heart = document.createElement('div');
         heart.className = 'heart';
         heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.animationDuration = 4 + Math.random() * 3 + 's';
+        heart.style.animationDuration = 3 + Math.random() * 3 + 's';
         document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 7000);
+        setTimeout(() => heart.remove(), 6000);
       }
-      setInterval(createHeart, 400);
-      // Кнопка
+      setInterval(createHeart, 300);
+
+      // Кнопка — изменение текста и исчезновение
       btn.addEventListener('click', () => {
         msg.style.opacity = 0;
         setTimeout(() => {
-          msg.innerHTML = 
+          msg.innerHTML = `
             Айлина, я просто хочу, чтобы ты знала —  
             ты делаешь мою жизнь лучше каждый день.  
             Ты — причина моей улыбки,  
             и я благодарен судьбе, что ты рядом ❤️  
             <br><br>С любовью,<br>Тот самый человек, кто всегда рядом 💞
-          ;
+          `;
           msg.style.opacity = 1;
         }, 400);
 
-        btn.style.display = 'none'; // 💖 кнопка исчезает
+        btn.style.display = 'none';
 
-        // музыка
+        // Музыка
         audio.volume = 0.8;
-        audio.play().catch(() => console.log('Автозапуск заблокирован.'));
+        audio.play().catch(() => {
+          console.log('⏸ Автозапуск заблокирован, но включится при касании.');
+          document.body.addEventListener('click', () => {
+            audio.play();
+          }, { once: true });
+        });
       });
     });
   </script>
 </body>
 </html>
-
