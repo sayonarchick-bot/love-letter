@@ -6,11 +6,13 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
   <style>
-    html,body{height:100%;margin:0}
-    body {
+    html, body {
+      height: 100%;
       margin: 0;
-      min-height: 100vh;
-      background: linear-gradient(180deg,#ffb6c1,#ff69b4,#ffc0cb);
+    }
+
+    body {
+      background: linear-gradient(180deg, #ffb6c1, #ff69b4, #ffc0cb);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -22,87 +24,96 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    h1{
-      font-size: calc(20px + 6vw);
-      margin: 0 0 12px 0;
-      animation: fadeIn 1.6s ease forwards;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.15);
+    h1 {
+      font-size: calc(22px + 5vw);
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+      animation: fadeIn 2s ease forwards;
     }
 
-    #message{
-      max-width: 92%;
-      font-size: calc(16px + 1.6vw);
-      line-height: 1.5;
-      margin: 0 0 18px 0;
-      opacity: 1; /* сразу видим основной текст */
-      transition: opacity 0.45s ease;
-      text-shadow: 1px 1px 6px rgba(0,0,0,0.12);
+    #message {
+      max-width: 90%;
+      font-size: calc(18px + 1.2vw);
+      line-height: 1.5em;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+      transition: opacity 0.5s ease;
     }
 
-    /* кнопка всегда над всем и кликабельна */
-    #loveBtn{
-      position: relative;
-      z-index: 9999;
-      margin-top: 6px;
+    #loveBtn {
+      margin-top: 25px;
       background: white;
       color: #ff2f86;
       border: none;
       border-radius: 28px;
-      padding: 12px 28px;
-      font-size: calc(14px + 1vw);
+      padding: 14px 30px;
+      font-size: calc(16px + 1vw);
       cursor: pointer;
-      font-weight: 700;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-      transition: transform .18s ease, background .18s ease;
-      -webkit-tap-highlight-color: transparent;
+      font-weight: bold;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+      transition: all 0.2s ease;
+      z-index: 1000;
+      position: relative;
     }
-    #loveBtn:active{ transform: scale(.98) }
-    #loveBtn:hover{ background:#ffe4e1 }
 
-    /* сердечки */
+    #loveBtn:hover {
+      background: #ffe4e1;
+      transform: scale(1.05);
+    }
+
     .heart {
       position: fixed;
-      width: 46px;
-      height: 46px;
-      background: #ff3b82;
-      transform: rotate(45deg);
-      top: -60px; /* начинаем выше экрана */
-      opacity: 0.95;
-      pointer-events: none; /* важно: не блокируют клики */
-      border-radius: 4px;
-      z-index: 1000;
+      width: 60px;
+      height: 60px;
+      background-color: #ff3b82;
+      top: -70px;
+      left: 50%;
+      transform: translateX(-50%) scale(1) rotate(0deg);
+      opacity: 0.9;
+      pointer-events: none;
+      animation: fall linear forwards;
     }
-    .heart::before, .heart::after {
-      content: "";
+
+    .heart::before,
+    .heart::after {
+      content: '';
       position: absolute;
-      width: 46px;
-      height: 46px;
-      background: #ff3b82;
+      width: 60px;
+      height: 60px;
+      background-color: #ff3b82;
       border-radius: 50%;
     }
-    .heart::before { top: -23px; left: 0 }
-    .heart::after  { left: 23px; top: 0 }
+
+    .heart::before {
+      top: -30px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 30px;
+      top: 0;
+    }
 
     @keyframes fall {
-      0%   { transform: rotate(45deg) translateY(-10vh) scale(1); opacity: 0; }
-      10%  { opacity: 1; }
-      100% { transform: rotate(45deg) translateY(120vh) scale(1.05); opacity: 0; }
+      0% {
+        transform: translateY(-10vh) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) scale(1.2);
+        opacity: 0;
+      }
     }
 
-    @keyframes fadeIn { to{opacity:1} }
-
-    /* адаптивные паддинги для телефона */
-    @media (max-width:420px){
-      #message{ font-size: calc(16px + 1.2vw) }
-      .heart{ width: 36px; height:36px }
-      .heart::before,.heart::after{ width:36px; height:36px }
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
     }
+
   </style>
 </head>
 <body>
-  <!-- аудио заранее, но без автоплей звука — мы начнём воспроизведение в обработчике клика -->
   <audio id="bgAudio" loop preload="auto">
-    <!-- если хочешь другой источник, замени URL -->
     <source src="https://docs.google.com/uc?export=download&id=1eqazTuS0VW4d5n-7YXXP-0lYZj-sB0HE" type="audio/mp3">
   </audio>
 
@@ -123,57 +134,41 @@
   <button id="loveBtn">Нажми сюда 💖</button>
 
   <script>
-    // ждём, пока DOM готов
-    document.addEventListener('DOMContentLoaded', function(){
+    document.addEventListener('DOMContentLoaded', function () {
       const btn = document.getElementById('loveBtn');
       const msg = document.getElementById('message');
       const audio = document.getElementById('bgAudio');
 
-      // Защитный тест: убедимся, что элемент найден
-      if(!btn || !msg){ console.warn('Элементы не найдены в DOM'); return; }
-
-      // функция создания сердца (каждое сердечко не мешает кликам)
-      function createHeart(){
+      // Сердечки падают сверху вниз
+      function createHeart() {
         const heart = document.createElement('div');
         heart.className = 'heart';
-        heart.style.left = (Math.random()*90) + 'vw';
-        const dur = 3 + Math.random()*4;
-        heart.style.animation = `fall ${dur}s linear forwards`;
-        heart.style.transform = 'rotate(45deg)';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = 4 + Math.random() * 3 + 's';
         document.body.appendChild(heart);
-        setTimeout(()=> heart.remove(), (dur*1000)+200);
+        setTimeout(() => heart.remove(), 7000);
       }
-      // стартуем генерацию сердец
-      setInterval(createHeart, 450);
-
-      // обработчик клика: плавно меняет текст и пробует запустить музыку
-      btn.addEventListener('click', function onClick(){
-        // меняем текст с небольшой задержкой + плавностью
+      setInterval(createHeart, 400);
+      
+      // Кнопка
+      btn.addEventListener('click', () => {
         msg.style.opacity = 0;
-        setTimeout(()=>{
-          msg.innerHTML = `
+        setTimeout(() => {
+          msg.innerHTML = 
             Айлина, я просто хочу, чтобы ты знала —  
             ты делаешь мою жизнь лучше каждый день.  
             Ты — причина моей улыбки,  
             и я благодарен судьбе, что ты рядом ❤️  
             <br><br>С любовью,<br>Тот самый человек, кто всегда рядом 💞
-          `;
+          ;
           msg.style.opacity = 1;
-        }, 300);
+        }, 400);
 
-        // попытка запустить аудио (некоторые браузеры требуют user gesture — клик подходит)
-        // мы ловим ошибки, чтобы не ломать работу страницы
-        if(audio){
-          // если ещё не запущено — пробуем play()
-          audio.volume = 0.8;
-          audio.play().catch((e)=> {
-            // если воспроизведение заблокировано, оставляем без звука
-            console.warn('Audio play failed:', e);
-          });
-        }
+        btn.style.display = 'none'; // 💖 кнопка исчезает
 
-        // если нужно — можно удалить слушатель, чтобы клик сработал один раз:
-        // btn.removeEventListener('click', onClick);
+        // музыка
+        audio.volume = 0.8;
+        audio.play().catch(() => console.log('Автозапуск заблокирован.'));
       });
     });
   </script>
