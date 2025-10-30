@@ -1,1 +1,71 @@
+<!doctype html>
+</ul>
+</div>
+
+
+<form onsubmit="handleSubmit(event)" style="display:flex;flex-direction:column;gap:8px">
+<div>
+<label for="name">Имя</label>
+<input id="name" name="name" required />
+</div>
+<div>
+<label for="email">Email</label>
+<input id="email" name="email" type="email" required />
+</div>
+<div>
+<label for="message">Сообщение</label>
+<textarea id="message" name="message" rows="4" required></textarea>
+</div>
+<div style="display:flex;gap:8px;justify-content:flex-end">
+<button type="submit" class="btn">Отправить</button>
+</div>
+</form>
+</div>
+</section>
+
+
+</main>
+
+
+<footer class="foot">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+<div>© <span id="year"></span> Мой Сайт — Все права защищены</div>
+<div style="color:var(--muted)">Сделано с ♥ — настройте под себя</div>
+</div>
+</footer>
+</div>
+
+
+<script>
+// Несколько утилит — не требуется сервер для работы
+document.getElementById('year').textContent = new Date().getFullYear();
+
+
+function scrollToSection(id){
+const el = document.getElementById(id);
+if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+
+function handleSubmit(e){
+e.preventDefault();
+const data = new FormData(e.target);
+const payload = Object.fromEntries(data.entries());
+// Здесь отправка на сервер — сейчас просто лог в консоль.
+console.log('Форма отправлена', payload);
+alert('Спасибо! Ваше сообщение отправлено (в демо оно только в консоли).');
+e.target.reset();
+}
+
+
+/*
+Подсказки по кастомизации:
+- Замените изображения в галерее на свои (замените URL в style="background-image:...")
+- Измените цвета в :root
+- Для интеграции реальной отправки форм подключите fetch() к вашему API в handleSubmit
+- Добавьте свои секции (Цены, Отзывы, Блог) по аналогии
+*/
+</script>
+</body>
+</html>
 
